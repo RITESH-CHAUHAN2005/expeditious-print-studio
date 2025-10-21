@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -8,13 +8,48 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Upload, Type, Image as ImageIcon, Shapes, Save, ShoppingCart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 const Customize = () => {
-  const [selectedProduct, setSelectedProduct] = useState("business-card");
+  const [quantity, setQuantity] = useState(100);
+  const [finish, setFinish] = useState("Matte");
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [textContent, setTextContent] = useState("");
+  const [selectedShape, setSelectedShape] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { addToCart } = useCart();
+
+  const price = finish === "Premium" ? 799 : finish === "Glossy" ? 599 : 499;
+  const total = Math.round(price * (quantity / 100));
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+        toast.success("Image uploaded!");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: Date.now(),
+      name: "Custom Business Card",
+      price: total,
+      finish,
+      image: uploadedImage || "/placeholder.svg",
+    });
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+      <WhatsAppButton />
       
       <main className="flex-1">
         <div className="bg-gradient-hero py-12">
@@ -60,23 +95,21 @@ const Customize = () => {
                       </TabsList>
                       
                       <TabsContent value="upload" className="space-y-4">
-                        <div className="border-2 border-dashed rounded-lg p-8 text-center hover:border-accent transition-colors cursor-pointer">
+                        <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+                        <div className="border-2 border-dashed rounded-lg p-8 text-center hover:border-accent transition-colors cursor-pointer" onClick={() => fileInputRef.current?.click()}>
                           <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                           <p className="font-semibold mb-2">Upload Your Design</p>
                           <p className="text-sm text-muted-foreground">
                             Drag and drop or click to browse
                           </p>
                         </div>
+                        {uploadedImage && <p className="text-sm text-green-600">✓ Uploaded</p>}
                       </TabsContent>
                       
                       <TabsContent value="text" className="space-y-4">
                         <div className="space-y-2">
                           <Label htmlFor="text-content">Add Text</Label>
-                          <Textarea
-                            id="text-content"
-                            placeholder="Enter your text here..."
-                            className="min-h-24"
-                          />
+                          <Textarea id="text-content" placeholder="Enter your text here..." className="min-h-24" value={textContent} onChange={(e) => setTextContent(e.target.value)} />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-2">
@@ -88,7 +121,7 @@ const Customize = () => {
                             <Input id="text-color" type="color" defaultValue="#003366" />
                           </div>
                         </div>
-                        <Button className="w-full">Add Text</Button>
+                        <Button className="w-full" onClick={() => toast.success("Text added!")}>Add Text</Button>
                       </TabsContent>
                       
                       <TabsContent value="images" className="space-y-4">
@@ -107,7 +140,7 @@ const Customize = () => {
                       <TabsContent value="shapes" className="space-y-4">
                         <div className="grid grid-cols-4 gap-4">
                           {["Rectangle", "Circle", "Triangle", "Star"].map((shape) => (
-                            <Button key={shape} variant="outline" className="h-20">
+                            <Button key={shape} variant={selectedShape === shape ? "default" : "outline"} className="h-20" onClick={() => { setSelectedShape(shape); toast.success(`${shape} added!`); }}>
                               {shape}
                             </Button>
                           ))}
@@ -127,15 +160,12 @@ const Customize = () => {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="quantity">Quantity</Label>
-                      <Input id="quantity" type="number" defaultValue="100" min="1" />
+                      <Input id="quantity" type="number" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} min="1" />
                     </div>
                     
                     <div className="space-y-2">
                       <Label htmlFor="finish">Finish</Label>
-                      <select
-                        id="finish"
-                        className="w-full rounded-md border border-input bg-background px-3 py-2"
-                      >
+                      <select id="finish" value={finish} onChange={(e) => setFinish(e.target.value)} className="w-full rounded-md border border-input bg-background px-3 py-2">
                         <option>Matte</option>
                         <option>Glossy</option>
                         <option>Premium</option>
@@ -145,15 +175,15 @@ const Customize = () => {
                     <div className="border-t pt-4">
                       <div className="flex justify-between mb-4">
                         <span className="font-semibold">Total Price</span>
-                        <span className="text-2xl font-bold text-accent">₹499</span>
+                        <span className="text-2xl font-bold text-accent">₹{total}</span>
                       </div>
                       
                       <div className="space-y-2">
-                        <Button className="w-full bg-gradient-cta" size="lg">
+                        <Button className="w-full bg-gradient-cta" size="lg" onClick={handleAddToCart}>
                           <ShoppingCart className="mr-2 h-5 w-5" />
                           Add to Cart
                         </Button>
-                        <Button variant="outline" className="w-full" size="lg">
+                        <Button variant="outline" className="w-full" size="lg" onClick={() => toast.success("Design saved!")}>
                           <Save className="mr-2 h-5 w-5" />
                           Save Design
                         </Button>

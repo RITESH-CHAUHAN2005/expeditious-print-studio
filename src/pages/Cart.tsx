@@ -5,22 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import businessCard from "@/assets/business-card.jpg";
-import mug from "@/assets/mug.jpg";
-
-const cartItems = [
-  { id: 1, name: "Standard Business Cards", price: 499, quantity: 2, image: businessCard },
-  { id: 2, name: "Ceramic Coffee Mug", price: 349, quantity: 1, image: mug },
-];
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { useCart } from "@/contexts/CartContext";
 
 const Cart = () => {
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = 99;
+  const { cart, removeFromCart, updateQuantity } = useCart();
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = subtotal > 1000 ? 0 : 50;
   const total = subtotal + shipping;
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+      <WhatsAppButton />
       
       <main className="flex-1">
         <div className="bg-gradient-hero py-12">
@@ -31,12 +28,20 @@ const Cart = () => {
         </div>
 
         <div className="container mx-auto px-4 py-8">
+          {cart.length === 0 ? (
+            <Card className="text-center py-12">
+              <CardContent>
+                <p className="text-muted-foreground mb-4">Your cart is empty</p>
+                <Button asChild><Link to="/products">Browse Products</Link></Button>
+              </CardContent>
+            </Card>
+          ) : (
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <Card>
                 <CardContent className="p-6">
                   <div className="space-y-6">
-                    {cartItems.map((item) => (
+                    {cart.map((item) => (
                       <div key={item.id} className="flex gap-4 pb-6 border-b last:border-0 last:pb-0">
                         <div className="w-24 h-24 rounded-lg overflow-hidden bg-secondary/30">
                           <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -48,7 +53,7 @@ const Cart = () => {
                           
                           <div className="flex items-center gap-2">
                             <div className="flex items-center border rounded-lg">
-                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1}>
                                 <Minus className="h-3 w-3" />
                               </Button>
                               <Input
@@ -57,12 +62,12 @@ const Cart = () => {
                                 className="w-12 h-8 text-center border-0"
                                 readOnly
                               />
-                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => updateQuantity(item.id, item.quantity + 1)}>
                                 <Plus className="h-3 w-3" />
                               </Button>
                             </div>
                             
-                            <Button variant="ghost" size="icon" className="text-destructive">
+                            <Button variant="ghost" size="icon" className="text-destructive" onClick={() => removeFromCart(item.id)}>
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
@@ -90,8 +95,11 @@ const Cart = () => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Shipping</span>
-                      <span className="font-semibold">₹{shipping}</span>
+                      <span className="font-semibold">{shipping === 0 ? "FREE" : `₹${shipping}`}</span>
                     </div>
+                    {subtotal > 0 && subtotal < 1000 && (
+                      <p className="text-xs text-muted-foreground">Add ₹{1000 - subtotal} more for free shipping</p>
+                    )}
                     <div className="border-t pt-3 flex justify-between">
                       <span className="font-bold text-lg">Total</span>
                       <span className="font-bold text-lg text-accent">₹{total}</span>
@@ -112,6 +120,7 @@ const Cart = () => {
               </Card>
             </div>
           </div>
+          )}
         </div>
       </main>
 

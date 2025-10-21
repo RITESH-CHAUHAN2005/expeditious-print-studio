@@ -6,35 +6,65 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Star, ShoppingCart, Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { useCart } from "@/contexts/CartContext";
 import businessCard from "@/assets/business-card.jpg";
-import mug from "@/assets/mug.jpg";
-import tshirt from "@/assets/tshirt.jpg";
 import canvas from "@/assets/canvas.jpg";
-import stickers from "@/assets/stickers.jpg";
-import marketing from "@/assets/marketing.jpg";
 
 const products = [
   { id: 1, name: "Standard Business Cards", category: "cards", price: 499, rating: 4.8, reviews: 128, image: businessCard },
   { id: 2, name: "Premium Business Cards", category: "cards", price: 799, rating: 4.9, reviews: 95, image: businessCard },
-  { id: 3, name: "Custom Photo Canvas", category: "canvas", price: 1299, rating: 4.7, reviews: 67, image: canvas },
-  { id: 4, name: "Ceramic Coffee Mug", category: "mugs", price: 349, rating: 4.6, reviews: 143, image: mug },
-  { id: 5, name: "Custom T-Shirt", category: "tshirts", price: 599, rating: 4.8, reviews: 201, image: tshirt },
-  { id: 6, name: "Vinyl Sticker Pack", category: "stickers", price: 199, rating: 4.9, reviews: 312, image: stickers },
-  { id: 7, name: "Marketing Flyers", category: "marketing", price: 899, rating: 4.7, reviews: 78, image: marketing },
-  { id: 8, name: "Brochure Set", category: "marketing", price: 1199, rating: 4.8, reviews: 56, image: marketing },
+  { id: 3, name: "Luxury Business Cards", category: "cards", price: 1099, rating: 5.0, reviews: 67, image: businessCard },
+  { id: 4, name: "Small Photo Canvas", category: "canvas", price: 899, rating: 4.7, reviews: 143, image: canvas },
+  { id: 5, name: "Medium Photo Canvas", category: "canvas", price: 1299, rating: 4.8, reviews: 201, image: canvas },
+  { id: 6, name: "Large Photo Canvas", category: "canvas", price: 1799, rating: 4.9, reviews: 156, image: canvas },
+  { id: 7, name: "Extra Large Canvas", category: "canvas", price: 2499, rating: 4.8, reviews: 89, image: canvas },
 ];
 
 const Products = () => {
   const [category, setCategory] = useState("all");
   const [sortBy, setSortBy] = useState("popularity");
+  const { addToCart, addToWishlist } = useCart();
 
-  const filteredProducts = products.filter(
+  let filteredProducts = products.filter(
     (product) => category === "all" || product.category === category
   );
+
+  // Apply sorting
+  if (sortBy === "price-low") {
+    filteredProducts = [...filteredProducts].sort((a, b) => a.price - b.price);
+  } else if (sortBy === "price-high") {
+    filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
+  } else if (sortBy === "rating") {
+    filteredProducts = [...filteredProducts].sort((a, b) => b.rating - a.rating);
+  } else {
+    // popularity - sort by reviews
+    filteredProducts = [...filteredProducts].sort((a, b) => b.reviews - a.reviews);
+  }
+
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      finish: "Matte",
+      image: product.image,
+    });
+  };
+
+  const handleWishlist = (product: any) => {
+    addToWishlist({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+    });
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+      <WhatsAppButton />
       
       <main className="flex-1">
         <div className="bg-gradient-hero py-12">
@@ -54,10 +84,6 @@ const Products = () => {
                 <SelectItem value="all">All Products</SelectItem>
                 <SelectItem value="cards">Business Cards</SelectItem>
                 <SelectItem value="canvas">Photo Canvas</SelectItem>
-                <SelectItem value="mugs">Custom Mugs</SelectItem>
-                <SelectItem value="tshirts">T-Shirts</SelectItem>
-                <SelectItem value="stickers">Stickers</SelectItem>
-                <SelectItem value="marketing">Marketing Materials</SelectItem>
               </SelectContent>
             </Select>
 
@@ -88,6 +114,7 @@ const Products = () => {
                       variant="ghost"
                       size="icon"
                       className="absolute top-2 right-2 bg-background/80 hover:bg-background"
+                      onClick={() => handleWishlist(product)}
                     >
                       <Heart className="h-4 w-4" />
                     </Button>
@@ -124,7 +151,10 @@ const Products = () => {
                   <Button variant="outline" className="flex-1" asChild>
                     <Link to={`/customize/${product.id}`}>Customize</Link>
                   </Button>
-                  <Button className="flex-1 bg-gradient-cta">
+                  <Button 
+                    className="flex-1 bg-gradient-cta"
+                    onClick={() => handleAddToCart(product)}
+                  >
                     <ShoppingCart className="h-4 w-4 mr-2" />
                     Add to Cart
                   </Button>
