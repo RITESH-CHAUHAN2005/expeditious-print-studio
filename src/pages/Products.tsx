@@ -12,22 +12,22 @@ import businessCard from "@/assets/business-card.jpg";
 import canvas from "@/assets/canvas.jpg";
 
 const products = [
-  { id: 1, name: "Standard Business Cards", category: "cards", price: 499, rating: 4.8, reviews: 128, image: businessCard },
-  { id: 2, name: "Premium Business Cards", category: "cards", price: 799, rating: 4.9, reviews: 95, image: businessCard },
-  { id: 3, name: "Luxury Business Cards", category: "cards", price: 1099, rating: 5.0, reviews: 67, image: businessCard },
-  { id: 4, name: "Small Photo Canvas", category: "canvas", price: 899, rating: 4.7, reviews: 143, image: canvas },
-  { id: 5, name: "Medium Photo Canvas", category: "canvas", price: 1299, rating: 4.8, reviews: 201, image: canvas },
-  { id: 6, name: "Large Photo Canvas", category: "canvas", price: 1799, rating: 4.9, reviews: 156, image: canvas },
-  { id: 7, name: "Extra Large Canvas", category: "canvas", price: 2499, rating: 4.8, reviews: 89, image: canvas },
+  { id: 1, name: "Standard Business Cards", category: "Cards", price: 499, rating: 4.8, reviews: 128, image: businessCard },
+  { id: 2, name: "Premium Business Cards", category: "Cards", price: 799, rating: 4.9, reviews: 95, image: businessCard },
+  { id: 3, name: "Luxury Business Cards", category: "Cards", price: 1099, rating: 5.0, reviews: 67, image: businessCard },
+  { id: 4, name: "Small Photo Canvas", category: "Canvas", price: 899, rating: 4.7, reviews: 143, image: canvas },
+  { id: 5, name: "Medium Photo Canvas", category: "Canvas", price: 1299, rating: 4.8, reviews: 201, image: canvas },
+  { id: 6, name: "Large Photo Canvas", category: "Canvas", price: 1799, rating: 4.9, reviews: 156, image: canvas },
+  { id: 7, name: "Extra Large Canvas", category: "Canvas", price: 2499, rating: 4.8, reviews: 89, image: canvas },
 ];
 
 const Products = () => {
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState("All");
   const [sortBy, setSortBy] = useState("popularity");
   const { addToCart, addToWishlist } = useCart();
 
   let filteredProducts = products.filter(
-    (product) => category === "all" || product.category === category
+    (product) => category === "All" || product.category === category
   );
 
   // Apply sorting
@@ -67,10 +67,11 @@ const Products = () => {
       <WhatsAppButton />
       
       <main className="flex-1">
-        <div className="bg-gradient-hero py-12">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-bold text-foreground mb-4">Our Products</h1>
-            <p className="text-muted-foreground text-lg">Browse our complete range of customizable products</p>
+        <div className="relative py-16 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-hero"></div>
+          <div className="relative container mx-auto px-4">
+            <h1 className="text-5xl font-bold text-white mb-4">Our Products</h1>
+            <p className="text-white/90 text-xl">Browse our complete range of customizable products</p>
           </div>
         </div>
 
@@ -81,9 +82,9 @@ const Products = () => {
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Products</SelectItem>
-                <SelectItem value="cards">Business Cards</SelectItem>
-                <SelectItem value="canvas">Photo Canvas</SelectItem>
+                <SelectItem value="All">All Products</SelectItem>
+                <SelectItem value="Cards">Business Cards</SelectItem>
+                <SelectItem value="Canvas">Photo Canvas</SelectItem>
               </SelectContent>
             </Select>
 

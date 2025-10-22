@@ -13,6 +13,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -90,10 +93,12 @@ export default {
       backgroundImage: {
         "gradient-hero": "var(--gradient-hero)",
         "gradient-cta": "var(--gradient-cta)",
+        "gradient-card": "var(--gradient-card)",
       },
       boxShadow: {
         card: "var(--shadow-card)",
         hover: "var(--shadow-hover)",
+        glow: "var(--shadow-glow)",
       },
     },
   },

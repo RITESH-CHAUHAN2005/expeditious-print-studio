@@ -13,8 +13,18 @@ import customer2 from "@/assets/customer2.jpg";
 import customer3 from "@/assets/customer3.jpg";
 
 const categories = [
-  { name: "Business Cards", image: businessCard, link: "/products?category=cards" },
-  { name: "Photo Canvas", image: canvas, link: "/products?category=canvas" },
+  { 
+    name: "Business Cards", 
+    image: businessCard, 
+    link: "/products?category=cards",
+    description: "Premium quality business cards that make lasting impressions"
+  },
+  { 
+    name: "Photo Canvas", 
+    image: canvas, 
+    link: "/products?category=canvas",
+    description: "Transform your photos into stunning wall art"
+  },
 ];
 
 const features = [
@@ -23,13 +33,14 @@ const features = [
   { icon: Headphones, title: "24/7 Support", description: "Always here to help" },
 ];
 
-const instagramPosts = [
-  { url: "https://www.instagram.com/p/DLp60zUhl6m/", title: "Premium Business Cards" },
-  { url: "https://www.instagram.com/reel/DMRyh8bBitE/", title: "Custom Canvas Prints" },
-  { url: "https://www.instagram.com/reel/DMBOUirBNtV/", title: "Professional Cards" },
-  { url: "https://www.instagram.com/reel/DPjg46PgUM6/", title: "Creative Designs" },
-  { url: "https://www.instagram.com/reel/DNU51gUBz4y/", title: "Quality Printing" },
-  { url: "https://www.instagram.com/reel/DM2Yy6xBJZB/", title: "Custom Products" },
+const instagramVideos = [
+  "DLp60zUhl6m",
+  "DMRyh8bBitE",
+  "DMBOUirBNtV",
+  "DPjg46PgUM6",
+  "DNU51gUBz4y",
+  "DOEbT-3gfIw",
+  "DM0ERfiBMGZ"
 ];
 
 const testimonials = [
@@ -64,69 +75,89 @@ const Home = () => {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative bg-gradient-hero overflow-hidden">
-          <div className="container mx-auto px-4 py-16 md:py-24">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="animate-fade-in">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                  Print Fast. Print Smart.
-                </h1>
-                <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
-                  Professional digital printing and customization for all your business needs. 
-                  From premium business cards to stunning canvas prints, we bring your vision to life 
-                  with exceptional quality and lightning-fast delivery.
-                </p>
-                <p className="text-base md:text-lg text-muted-foreground mb-8">
-                  ✓ Premium Quality Materials &nbsp; ✓ Same Day Printing Available &nbsp; ✓ Competitive Pricing &nbsp; ✓ Expert Design Support
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Button size="lg" className="bg-gradient-cta hover:shadow-hover transition-all" asChild>
-                    <Link to="/products">Explore Products</Link>
-                  </Button>
-                  <Button size="lg" variant="outline" asChild>
-                    <Link to="/customize">Start Customizing</Link>
-                  </Button>
+        <section className="relative min-h-[90vh] overflow-hidden">
+          <div className="absolute inset-0">
+            <img 
+              src={heroBanner} 
+              alt="Digital Printing Background" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+          </div>
+          
+          <div className="relative container mx-auto px-4 py-20 md:py-32 flex items-center min-h-[90vh]">
+            <div className="max-w-3xl animate-fade-in">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight">
+                Print Fast. <span className="text-transparent bg-clip-text bg-gradient-cta">Print Smart.</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-white/90 mb-4 leading-relaxed font-medium">
+                Professional digital printing and customization for all your business needs. 
+                From premium business cards to stunning canvas prints, we bring your vision to life 
+                with exceptional quality and lightning-fast delivery.
+              </p>
+              <div className="grid grid-cols-2 gap-4 mb-8 text-white/90">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-accent"></div>
+                  <span className="font-medium">Premium Quality Materials</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                  <span className="font-medium">Same Day Printing Available</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-accent"></div>
+                  <span className="font-medium">Competitive Pricing</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                  <span className="font-medium">Expert Design Support</span>
                 </div>
               </div>
-              <div className="animate-scale-in">
-                <img src={heroBanner} alt="Digital Printing" className="rounded-2xl shadow-hover w-full" />
+              <div className="flex flex-wrap gap-4">
+                <Button size="lg" className="bg-gradient-cta hover:shadow-glow transition-all text-lg px-8 py-6 font-bold" asChild>
+                  <Link to="/products">Explore Products</Link>
+                </Button>
+                <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-bold bg-white text-primary hover:bg-white/90" asChild>
+                  <Link to="/customize">Start Customizing</Link>
+                </Button>
               </div>
             </div>
           </div>
         </section>
 
         {/* Categories Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+        <section className="container mx-auto px-4 py-20">
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-card mb-4">
               Explore Our Products
             </h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-xl">
               High-quality printing solutions for every need
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {categories.map((category, index) => (
               <Link
                 key={index}
                 to={category.link}
                 className="group"
               >
-                <Card className="overflow-hidden border-2 hover:border-accent hover:shadow-hover transition-all duration-300">
+                <Card className="overflow-hidden border-2 hover:border-primary hover:shadow-glow transition-all duration-300 bg-gradient-to-br from-card to-muted">
                   <CardContent className="p-0">
-                    <div className="aspect-[4/3] overflow-hidden">
+                    <div className="aspect-[4/3] overflow-hidden relative">
                       <img
                         src={category.image}
                         alt={category.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <div className="p-6 text-center">
-                      <h3 className="font-bold text-xl group-hover:text-accent transition-colors">
+                    <div className="p-8 text-center">
+                      <h3 className="font-bold text-2xl group-hover:text-primary transition-colors mb-2">
                         {category.name}
                       </h3>
-                      <p className="text-sm text-muted-foreground mt-2">Premium quality printing</p>
+                      <p className="text-muted-foreground">{category.description}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -136,39 +167,90 @@ const Home = () => {
         </section>
 
         {/* Instagram Showcase Section */}
-        <section className="container mx-auto px-4 py-16 bg-secondary/20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Our Recent Work
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              See what we've created for our customers
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {instagramPosts.map((post, index) => (
-              <a
-                key={index}
-                href={post.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group"
-              >
-                <Card className="overflow-hidden hover:shadow-hover transition-all duration-300">
-                  <CardContent className="p-0">
-                    <div className="aspect-square bg-gradient-to-br from-purple-400 via-pink-500 to-orange-500 flex items-center justify-center relative overflow-hidden">
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                      <div className="relative z-10 text-white text-center p-6">
-                        <Sparkles className="h-12 w-12 mx-auto mb-4" />
-                        <h3 className="font-bold text-xl mb-2">{post.title}</h3>
-                        <p className="text-sm opacity-90">View on Instagram</p>
+        <section className="bg-gradient-to-br from-muted to-background py-20">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12 animate-fade-in">
+              <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-card mb-4">
+                Our Recent Work
+              </h2>
+              <p className="text-muted-foreground text-xl">
+                See what we've created for our customers
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+              {instagramVideos.map((videoId, index) => (
+                <div key={index} className="group">
+                  <Card className="overflow-hidden hover:shadow-glow transition-all duration-300 border-2 hover:border-primary">
+                    <CardContent className="p-0">
+                      <div className="aspect-[9/16] relative bg-black">
+                        <iframe
+                          src={`https://www.instagram.com/p/${videoId}/embed`}
+                          className="w-full h-full"
+                          frameBorder="0"
+                          scrolling="no"
+                          allowTransparency={true}
+                        />
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </a>
-            ))}
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* About Company Section */}
+        <section className="container mx-auto px-4 py-20">
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="animate-fade-in">
+              <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-card mb-6">
+                Who We Are
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Expeditious Digital Prints is your trusted partner for premium printing solutions. 
+                With state-of-the-art technology and a passion for perfection, we transform your ideas 
+                into vibrant, high-quality prints.
+              </p>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Whether it's professional business cards that make lasting impressions or stunning 
+                photo canvases that turn your memories into art, we deliver exceptional quality with 
+                unmatched speed.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-gradient-cta flex items-center justify-center flex-shrink-0 mt-1">
+                    <Award className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">Industry-Leading Quality</h3>
+                    <p className="text-muted-foreground">Premium materials and advanced printing technology</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-gradient-cta flex items-center justify-center flex-shrink-0 mt-1">
+                    <Clock className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">Lightning-Fast Turnaround</h3>
+                    <p className="text-muted-foreground">Same-day printing available for urgent orders</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-gradient-cta flex items-center justify-center flex-shrink-0 mt-1">
+                    <Sparkles className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg mb-1">Full Customization</h3>
+                    <p className="text-muted-foreground">Easy-to-use tools or expert design assistance</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 animate-scale-in">
+              <img src={businessCard} alt="Business Cards" className="rounded-xl shadow-hover w-full h-48 object-cover" />
+              <img src={canvas} alt="Canvas Prints" className="rounded-xl shadow-hover w-full h-48 object-cover mt-8" />
+            </div>
           </div>
         </section>
 
@@ -288,15 +370,16 @@ const Home = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-primary text-primary-foreground py-16">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <section className="relative overflow-hidden py-20">
+          <div className="absolute inset-0 bg-gradient-hero"></div>
+          <div className="relative container mx-auto px-4 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Ready to Get Started?
             </h2>
-            <p className="text-lg opacity-90 mb-8">
-              Create custom designs and bring your ideas to life
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Create custom designs and bring your ideas to life with our easy-to-use tools
             </p>
-            <Button size="lg" variant="secondary" asChild>
+            <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 font-bold shadow-glow" asChild>
               <Link to="/customize">Start Customizing Now</Link>
             </Button>
           </div>
