@@ -2,9 +2,14 @@ import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import logo from "@/assets/logo.png";
 
 const Footer = () => {
+  const handleNewsletterSubmit = () => {
+    toast.success("Thank you for subscribing to our newsletter!");
+  };
+
   return (
     <footer className="bg-primary text-primary-foreground mt-20">
       <div className="container mx-auto px-4 py-12">
@@ -18,8 +23,15 @@ const Footer = () => {
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:text-accent">
                 <Facebook className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:text-accent">
-                <Instagram className="h-5 w-5" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-primary-foreground hover:text-accent"
+                asChild
+              >
+                <a href="https://www.instagram.com/expeditiousdigitalprints/" target="_blank" rel="noopener noreferrer">
+                  <Instagram className="h-5 w-5" />
+                </a>
               </Button>
               <Button variant="ghost" size="icon" className="text-primary-foreground hover:text-accent">
                 <Twitter className="h-5 w-5" />
@@ -60,7 +72,7 @@ const Footer = () => {
                 placeholder="Your email"
                 className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60"
               />
-              <Button variant="secondary" size="icon">
+              <Button variant="secondary" size="icon" onClick={handleNewsletterSubmit}>
                 <Mail className="h-4 w-4" />
               </Button>
             </div>

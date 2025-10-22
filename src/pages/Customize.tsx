@@ -1,11 +1,10 @@
 import { useState, useRef } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Type, Image as ImageIcon, Shapes, Save, ShoppingCart } from "lucide-react";
+import { Upload, Save, ShoppingCart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -13,16 +12,17 @@ import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 
 const Customize = () => {
+  const location = useLocation();
+  const product = location.state?.product;
   const [quantity, setQuantity] = useState(100);
   const [finish, setFinish] = useState("Matte");
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-  const [textContent, setTextContent] = useState("");
-  const [selectedShape, setSelectedShape] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { addToCart } = useCart();
 
-  const price = finish === "Premium" ? 799 : finish === "Glossy" ? 599 : 499;
-  const total = Math.round(price * (quantity / 100));
+  const basePrice = product?.price || 499;
+  const finishMultiplier = finish === "Premium" ? 1.6 : finish === "Glossy" ? 1.2 : 1;
+  const total = Math.round(basePrice * finishMultiplier * (quantity / 100));
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -37,13 +37,26 @@ const Customize = () => {
   };
 
   const handleAddToCart = () => {
+    if (!uploadedImage) {
+      toast.error("Please upload a design first");
+      return;
+    }
     addToCart({
       id: Date.now(),
-      name: "Custom Business Card",
+      name: product?.name || "Custom Design",
       price: total,
       finish,
-      image: uploadedImage || "/placeholder.svg",
+      image: uploadedImage,
     });
+    toast.success("Added to cart!");
+  };
+
+  const handleSaveDesign = () => {
+    if (!uploadedImage) {
+      toast.error("Please upload a design first");
+      return;
+    }
+    toast.success("Design saved successfully!");
   };
 
   return (
@@ -54,8 +67,15 @@ const Customize = () => {
       <main className="flex-1">
         <div className="bg-gradient-hero py-12">
           <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-bold text-foreground mb-4">Customize Your Design</h1>
-            <p className="text-muted-foreground text-lg">Create unique designs with our easy-to-use editor</p>
+            <h1 className="text-4xl font-bold text-white mb-4">Customize Your Design</h1>
+            <p className="text-white/90 text-lg">{product?.name || "Create unique designs with our easy-to-use editor"}</p>
+            {product && (
+              <div className="mt-4 text-white/80">
+                <p className="text-sm">Category: {product.category}</p>
+                <p className="text-sm">Base Price: ₹{product.price}</p>
+                <p className="text-sm">Rating: {product.rating} ⭐ ({product.reviews} reviews)</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -64,89 +84,48 @@ const Customize = () => {
             <div className="lg:col-span-2">
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
-                  <div className="aspect-[16/10] bg-gradient-hero flex items-center justify-center border-b">
-                    <div className="text-center p-8">
-                      <div className="w-64 h-40 bg-background rounded-lg shadow-hover mx-auto mb-4 flex items-center justify-center">
-                        <p className="text-muted-foreground">Preview Area</p>
+                  <div className="aspect-[16/10] bg-gradient-to-br from-secondary/20 to-muted flex items-center justify-center border-b">
+                    <div className="text-center p-8 w-full">
+                      <h3 className="font-semibold mb-4 text-lg">Preview Area</h3>
+                      <div className="max-w-lg mx-auto bg-background rounded-lg shadow-glow p-8 min-h-[300px] flex items-center justify-center">
+                        {uploadedImage ? (
+                          <img 
+                            src={uploadedImage} 
+                            alt="Uploaded design" 
+                            className="max-w-full max-h-full object-contain rounded"
+                          />
+                        ) : (
+                          <p className="text-muted-foreground">Upload your design to see preview</p>
+                        )}
                       </div>
-                      <p className="text-sm text-muted-foreground">Your design will appear here</p>
                     </div>
                   </div>
                   
                   <div className="p-6">
-                    <Tabs defaultValue="upload" className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
-                        <TabsTrigger value="upload">
-                          <Upload className="h-4 w-4 mr-2" />
-                          Upload
-                        </TabsTrigger>
-                        <TabsTrigger value="text">
-                          <Type className="h-4 w-4 mr-2" />
-                          Text
-                        </TabsTrigger>
-                        <TabsTrigger value="images">
-                          <ImageIcon className="h-4 w-4 mr-2" />
-                          Images
-                        </TabsTrigger>
-                        <TabsTrigger value="shapes">
-                          <Shapes className="h-4 w-4 mr-2" />
-                          Shapes
-                        </TabsTrigger>
-                      </TabsList>
-                      
-                      <TabsContent value="upload" className="space-y-4">
-                        <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
-                        <div className="border-2 border-dashed rounded-lg p-8 text-center hover:border-accent transition-colors cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                          <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                          <p className="font-semibold mb-2">Upload Your Design</p>
-                          <p className="text-sm text-muted-foreground">
-                            Drag and drop or click to browse
-                          </p>
-                        </div>
-                        {uploadedImage && <p className="text-sm text-green-600">✓ Uploaded</p>}
-                      </TabsContent>
-                      
-                      <TabsContent value="text" className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="text-content">Add Text</Label>
-                          <Textarea id="text-content" placeholder="Enter your text here..." className="min-h-24" value={textContent} onChange={(e) => setTextContent(e.target.value)} />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="font-size">Font Size</Label>
-                            <Input id="font-size" type="number" defaultValue="16" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="text-color">Color</Label>
-                            <Input id="text-color" type="color" defaultValue="#003366" />
-                          </div>
-                        </div>
-                        <Button className="w-full" onClick={() => toast.success("Text added!")}>Add Text</Button>
-                      </TabsContent>
-                      
-                      <TabsContent value="images" className="space-y-4">
-                        <div className="grid grid-cols-3 gap-4">
-                          {[1, 2, 3, 4, 5, 6].map((i) => (
-                            <div
-                              key={i}
-                              className="aspect-square rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors cursor-pointer flex items-center justify-center"
-                            >
-                              <ImageIcon className="h-8 w-8 text-muted-foreground" />
-                            </div>
-                          ))}
-                        </div>
-                      </TabsContent>
-                      
-                      <TabsContent value="shapes" className="space-y-4">
-                        <div className="grid grid-cols-4 gap-4">
-                          {["Rectangle", "Circle", "Triangle", "Star"].map((shape) => (
-                            <Button key={shape} variant={selectedShape === shape ? "default" : "outline"} className="h-20" onClick={() => { setSelectedShape(shape); toast.success(`${shape} added!`); }}>
-                              {shape}
-                            </Button>
-                          ))}
-                        </div>
-                      </TabsContent>
-                    </Tabs>
+                    <h3 className="font-bold text-lg mb-4">Upload Your Design</h3>
+                    <input 
+                      ref={fileInputRef} 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={handleFileUpload} 
+                      className="hidden" 
+                    />
+                    <div 
+                      className="border-2 border-dashed rounded-lg p-12 text-center hover:border-primary hover:bg-secondary/10 transition-all cursor-pointer" 
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <Upload className="h-16 w-16 mx-auto mb-4 text-primary" />
+                      <p className="font-semibold text-lg mb-2">Click to Upload Your Design</p>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Drag and drop or click to browse
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Supported formats: JPG, PNG, PDF
+                      </p>
+                      {uploadedImage && (
+                        <p className="text-sm text-green-600 mt-4 font-medium">✓ Design uploaded successfully!</p>
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -183,7 +162,7 @@ const Customize = () => {
                           <ShoppingCart className="mr-2 h-5 w-5" />
                           Add to Cart
                         </Button>
-                        <Button variant="outline" className="w-full" size="lg" onClick={() => toast.success("Design saved!")}>
+                        <Button variant="outline" className="w-full" size="lg" onClick={handleSaveDesign}>
                           <Save className="mr-2 h-5 w-5" />
                           Save Design
                         </Button>
@@ -199,7 +178,9 @@ const Customize = () => {
                   <p className="text-sm text-muted-foreground mb-4">
                     Our design experts are here to assist you
                   </p>
-                  <Button variant="outline" className="w-full">Contact Support</Button>
+                  <Button variant="outline" className="w-full" asChild>
+                    <Link to="/contact">Contact Support</Link>
+                  </Button>
                 </CardContent>
               </Card>
             </div>

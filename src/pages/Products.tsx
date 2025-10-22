@@ -76,17 +76,39 @@ const Products = () => {
         </div>
 
         <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger className="w-full sm:w-48">
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Products</SelectItem>
-                <SelectItem value="Cards">Business Cards</SelectItem>
-                <SelectItem value="Canvas">Photo Canvas</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="flex flex-col sm:flex-row gap-4 mb-8 items-center">
+            <div className="flex gap-4">
+              <button
+                onClick={() => setCategory("All")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  category === "All" 
+                    ? "bg-primary text-primary-foreground" 
+                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                }`}
+              >
+                All Products
+              </button>
+              <button
+                onClick={() => setCategory("Cards")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  category === "Cards" 
+                    ? "bg-primary text-primary-foreground" 
+                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                }`}
+              >
+                Business Cards
+              </button>
+              <button
+                onClick={() => setCategory("Canvas")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  category === "Canvas" 
+                    ? "bg-primary text-primary-foreground" 
+                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                }`}
+              >
+                Photo Canvas
+              </button>
+            </div>
 
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-full sm:w-48">
@@ -150,7 +172,12 @@ const Products = () => {
                 
                 <CardFooter className="p-4 pt-0 gap-2">
                   <Button variant="outline" className="flex-1" asChild>
-                    <Link to={`/customize/${product.id}`}>Customize</Link>
+                    <Link 
+                      to={`/customize/${product.id}`}
+                      state={{ product }}
+                    >
+                      Customize
+                    </Link>
                   </Button>
                   <Button 
                     className="flex-1 bg-gradient-cta"

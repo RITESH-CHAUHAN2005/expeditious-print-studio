@@ -40,7 +40,9 @@ const instagramVideos = [
   "DPjg46PgUM6",
   "DNU51gUBz4y",
   "DOEbT-3gfIw",
-  "DM0ERfiBMGZ"
+  "DM0ERfiBMGZ",
+  "DMhOOXqB3oy",
+  "DLiDaiPBHn8"
 ];
 
 const testimonials = [
@@ -81,6 +83,8 @@ const Home = () => {
               src={heroBanner} 
               alt="Digital Printing Background" 
               className="w-full h-full object-cover"
+              loading="eager"
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
           </div>
@@ -92,8 +96,8 @@ const Home = () => {
               </h1>
               <p className="text-xl md:text-2xl text-white/90 mb-4 leading-relaxed font-medium">
                 Professional digital printing and customization for all your business needs. 
-                From premium business cards to stunning canvas prints, we bring your vision to life 
-                with exceptional quality and lightning-fast delivery.
+                From premium business cards to stunning canvas prints and custom merchandise, 
+                we bring your vision to life with exceptional quality and lightning-fast delivery.
               </p>
               <div className="grid grid-cols-2 gap-4 mb-8 text-white/90">
                 <div className="flex items-center gap-2">
@@ -143,17 +147,18 @@ const Home = () => {
                 to={category.link}
                 className="group"
               >
-                <Card className="overflow-hidden border-2 hover:border-primary hover:shadow-glow transition-all duration-300 bg-gradient-to-br from-card to-muted">
-                  <CardContent className="p-0">
+                <Card className="overflow-hidden border-2 hover:border-primary hover:shadow-glow transition-all duration-300 bg-gradient-to-br from-card to-muted h-full">
+                  <CardContent className="p-0 flex flex-col h-full">
                     <div className="aspect-[4/3] overflow-hidden relative">
                       <img
                         src={category.image}
                         alt={category.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <div className="p-8 text-center">
+                    <div className="p-8 text-center flex-1 flex flex-col justify-center">
                       <h3 className="font-bold text-2xl group-hover:text-primary transition-colors mb-2">
                         {category.name}
                       </h3>
@@ -248,8 +253,24 @@ const Home = () => {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 animate-scale-in">
-              <img src={businessCard} alt="Business Cards" className="rounded-xl shadow-hover w-full h-48 object-cover" />
-              <img src={canvas} alt="Canvas Prints" className="rounded-xl shadow-hover w-full h-48 object-cover mt-8" />
+              <div className="rounded-xl shadow-hover overflow-hidden">
+                <iframe
+                  src="https://www.instagram.com/p/DLp60zUhl6m/embed"
+                  className="w-full h-64"
+                  frameBorder="0"
+                  scrolling="no"
+                  allowTransparency={true}
+                />
+              </div>
+              <div className="rounded-xl shadow-hover overflow-hidden mt-8">
+                <iframe
+                  src="https://www.instagram.com/p/DMRyh8bBitE/embed"
+                  className="w-full h-64"
+                  frameBorder="0"
+                  scrolling="no"
+                  allowTransparency={true}
+                />
+              </div>
             </div>
           </div>
         </section>
