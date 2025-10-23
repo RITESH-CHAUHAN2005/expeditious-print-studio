@@ -56,13 +56,13 @@ const Navbar = () => {
                   <NavigationMenuContent>
                     <div className="w-[400px] p-4 bg-background z-50">
                       <div className="mb-4">
-                        <h4 className="font-bold text-foreground mb-2">Visiting Cards</h4>
-                        <ul className="space-y-2">
+                        <h4 className="font-bold text-foreground mb-2 text-sm">Visiting Cards</h4>
+                        <ul className="space-y-1">
                           {cardTypes.filter(c => !c.category).map((card) => (
                             <li key={card.path}>
                               <Link
                                 to={card.path}
-                                className="block px-3 py-2 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                                className="block px-3 py-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground text-sm"
                               >
                                 {card.name}
                                 {card.isNew && (
@@ -74,13 +74,13 @@ const Navbar = () => {
                         </ul>
                       </div>
                       <div>
-                        <h4 className="font-bold text-foreground mb-2">Digital Visiting Cards</h4>
-                        <ul className="space-y-2">
+                        <h4 className="font-bold text-foreground mb-2 text-sm">Digital Visiting Cards</h4>
+                        <ul className="space-y-1">
                           {cardTypes.filter(c => c.category === "Digital").map((card) => (
                             <li key={card.path}>
                               <Link
                                 to={card.path}
-                                className="block px-3 py-2 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                                className="block px-3 py-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground text-sm"
                               >
                                 {card.name}
                               </Link>
@@ -102,12 +102,12 @@ const Navbar = () => {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-[300px] p-4 bg-background z-50">
-                      <ul className="space-y-2">
+                      <ul className="space-y-1">
                         {canvasTypes.map((canvas) => (
                           <li key={canvas.path}>
                             <Link
                               to={canvas.path}
-                              className="block px-3 py-2 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                              className="block px-3 py-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground text-sm"
                             >
                               {canvas.name}
                             </Link>
