@@ -11,29 +11,29 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-primary text-primary-foreground mt-20">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white mt-20">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <img src={logo} alt="Expeditious Digital Prints" className="h-12 mb-4 brightness-0 invert" />
+            <img src={logo} alt="Expeditious Digital Prints" className="h-16 mb-4" />
             <p className="text-sm opacity-90 mb-4">
               Print Fast. Print Smart.
             </p>
             <div className="flex gap-3">
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:text-accent">
+              <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
                 <Facebook className="h-5 w-5" />
               </Button>
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="text-primary-foreground hover:text-accent"
+                className="text-white hover:text-gray-300"
                 asChild
               >
                 <a href="https://www.instagram.com/expeditiousdigitalprints/" target="_blank" rel="noopener noreferrer">
                   <Instagram className="h-5 w-5" />
                 </a>
               </Button>
-              <Button variant="ghost" size="icon" className="text-primary-foreground hover:text-accent">
+              <Button variant="ghost" size="icon" className="text-white hover:text-gray-300">
                 <Twitter className="h-5 w-5" />
               </Button>
             </div>
@@ -70,16 +70,16 @@ const Footer = () => {
               <Input
                 type="email"
                 placeholder="Your email"
-                className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/60"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
               />
-              <Button variant="secondary" size="icon" onClick={handleNewsletterSubmit}>
+              <Button className="bg-white text-black hover:bg-gray-200" size="icon" onClick={handleNewsletterSubmit}>
                 <Mail className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm opacity-80">
+        <div className="border-t border-white/20 mt-8 pt-8 text-center text-sm opacity-80">
           <p>&copy; 2025 Expeditious Digital Prints. All rights reserved.</p>
         </div>
       </div>

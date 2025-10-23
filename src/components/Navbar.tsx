@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { ShoppingCart, Search, User, Heart } from "lucide-react";
+import { ShoppingCart, User, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/contexts/CartContext";
 import logo from "@/assets/logo.png";
@@ -17,34 +16,23 @@ const Navbar = () => {
             <img src={logo} alt="Expeditious Digital Prints" className="h-10" />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/" className="text-sm font-medium hover:text-accent transition-colors">
+          <nav className="hidden md:flex items-center gap-8 mx-auto">
+            <Link to="/" className="text-base font-semibold hover:text-accent transition-colors px-4">
               Home
             </Link>
-            <Link to="/products" className="text-sm font-medium hover:text-accent transition-colors">
-              Products
+            <Link to="/products?category=cards" className="text-base font-semibold hover:text-accent transition-colors px-4">
+              Cards
             </Link>
-            <Link to="/customize" className="text-sm font-medium hover:text-accent transition-colors">
-              Customize
+            <Link to="/products?category=canvas" className="text-base font-semibold hover:text-accent transition-colors px-4">
+              Photo Canvas
             </Link>
-            <Link to="/about" className="text-sm font-medium hover:text-accent transition-colors">
+            <Link to="/about" className="text-base font-semibold hover:text-accent transition-colors px-4">
               About Us
             </Link>
-            <Link to="/contact" className="text-sm font-medium hover:text-accent transition-colors">
+            <Link to="/contact" className="text-base font-semibold hover:text-accent transition-colors px-4">
               Contact
             </Link>
           </nav>
-
-          <div className="hidden lg:flex items-center gap-4 flex-1 max-w-md mx-8">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="pl-9 bg-secondary/30"
-              />
-            </div>
-          </div>
 
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="relative" asChild>

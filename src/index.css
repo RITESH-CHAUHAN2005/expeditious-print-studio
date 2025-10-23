@@ -9,41 +9,41 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 280 60% 20%;
+    --foreground: 0 0% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 280 60% 20%;
+    --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 280 60% 20%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 280 70% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 20%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 320 85% 65%;
+    --secondary: 0 0% 45%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 280 20% 96%;
-    --muted-foreground: 280 20% 45%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 190 95% 55%;
+    --accent: 0 0% 30%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 280 20% 90%;
-    --input: 280 20% 90%;
-    --ring: 280 70% 50%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 20%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
 
-    --gradient-hero: linear-gradient(135deg, hsl(280, 70%, 50%), hsl(320, 85%, 65%), hsl(190, 95%, 55%));
-    --gradient-cta: linear-gradient(135deg, hsl(190, 95%, 55%), hsl(280, 70%, 50%));
-    --gradient-card: linear-gradient(135deg, hsl(320, 85%, 65%), hsl(280, 70%, 50%));
-    --shadow-card: 0 4px 16px rgba(147, 51, 234, 0.15);
-    --shadow-hover: 0 12px 32px rgba(147, 51, 234, 0.25);
-    --shadow-glow: 0 0 40px rgba(147, 51, 234, 0.3);
+    --gradient-hero: linear-gradient(135deg, hsl(0, 0%, 15%), hsl(0, 0%, 30%));
+    --gradient-cta: linear-gradient(135deg, hsl(0, 0%, 25%), hsl(0, 0%, 10%));
+    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 95%), hsl(0, 0%, 98%));
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.15);
+    --shadow-glow: 0 0 40px rgba(0, 0, 0, 0.2);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
