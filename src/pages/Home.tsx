@@ -132,7 +132,7 @@ const Home = () => {
         {/* Categories Section */}
         <section className="container mx-auto px-4 py-20">
           <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-card mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Explore Our Products
             </h2>
             <p className="text-muted-foreground text-xl">
@@ -175,7 +175,7 @@ const Home = () => {
         <section className="bg-gradient-to-br from-muted to-background py-20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12 animate-fade-in">
-              <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-card mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
                 Our Recent Work
               </h2>
               <p className="text-muted-foreground text-xl">
@@ -209,7 +209,7 @@ const Home = () => {
         <section className="container mx-auto px-4 py-20">
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="animate-fade-in">
-              <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-card mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
                 Who We Are
               </h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
