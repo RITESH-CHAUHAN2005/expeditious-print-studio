@@ -42,11 +42,11 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4">Products</h3>
             <ul className="space-y-2 text-sm opacity-90">
-              <li><Link to="/products?category=cards" className="hover:text-accent transition-colors">Business Cards</Link></li>
-              <li><Link to="/products?category=canvas" className="hover:text-accent transition-colors">Photo Canvas</Link></li>
-              <li><Link to="/products?category=mugs" className="hover:text-accent transition-colors">Custom Mugs</Link></li>
-              <li><Link to="/products?category=tshirts" className="hover:text-accent transition-colors">T-Shirts</Link></li>
-              <li><Link to="/products?category=stickers" className="hover:text-accent transition-colors">Stickers</Link></li>
+              <li><Link to="/products/classic-cards" className="hover:text-accent transition-colors">Business Cards</Link></li>
+              <li><Link to="/products/standard-canvas" className="hover:text-accent transition-colors">Photo Canvas</Link></li>
+              <li><span className="opacity-60 cursor-not-allowed">Custom Mugs</span></li>
+              <li><span className="opacity-60 cursor-not-allowed">T-Shirts</span></li>
+              <li><span className="opacity-60 cursor-not-allowed">Stickers</span></li>
             </ul>
           </div>
 

@@ -5,11 +5,10 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Check, Upload, Palette } from "lucide-react";
+import { Check, Palette } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
-import { toast } from "sonner";
 import businessCardImg from "@/assets/business-card.jpg";
+import SEO from "@/components/SEO";
 
 const ClassicCards = () => {
   const navigate = useNavigate();
@@ -55,6 +54,11 @@ const ClassicCards = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Classic Visiting Cards"
+        description="Timeless and professional visiting cards with classic rectangular design. Premium 350 GSM card stock with matte or glossy finish."
+        keywords="classic business cards, visiting cards, professional cards, rectangular cards, printing"
+      />
       <Navbar />
       <WhatsAppButton />
 
@@ -73,55 +77,55 @@ const ClassicCards = () => {
               <h1 className="text-4xl font-bold text-foreground mb-2">
                 Classic Visiting Cards
               </h1>
-              <p className="text-muted-foreground text-lg">
+              <p className="text-muted-foreground text-lg mb-4">
                 Timeless and professional visiting cards with a classic rectangular design
               </p>
-            </div>
 
-            <Card className="p-6 space-y-4">
-              <div>
-                <label className="text-sm font-medium text-foreground mb-3 block">
-                  Select Quantity
-                </label>
-                <div className="grid grid-cols-2 gap-3">
-                  {quantities.map((qty) => (
-                    <Button
-                      key={qty}
-                      variant={selectedQuantity === qty ? "default" : "outline"}
-                      onClick={() => setSelectedQuantity(qty)}
-                      className="h-auto py-4 flex flex-col items-center gap-1"
-                    >
-                      <span className="text-lg font-bold">{qty} Cards</span>
-                      <span className="text-sm">₹{prices[qty as keyof typeof prices]}</span>
+              <Card className="p-6 space-y-4">
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-3 block">
+                    Select Quantity
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {quantities.map((qty) => (
+                      <Button
+                        key={qty}
+                        variant={selectedQuantity === qty ? "default" : "outline"}
+                        onClick={() => setSelectedQuantity(qty)}
+                        className="h-auto py-4 flex flex-col items-center gap-1"
+                      >
+                        <span className="text-lg font-bold">{qty} Cards</span>
+                        <span className="text-sm">₹{prices[qty as keyof typeof prices]}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t">
+                  <div className="flex items-baseline gap-2 mb-4">
+                    <span className="text-3xl font-bold text-foreground">
+                      ₹{prices[selectedQuantity as keyof typeof prices]}
+                    </span>
+                    <span className="text-muted-foreground">for {selectedQuantity} cards</span>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Button onClick={handleCustomize} className="w-full" size="lg">
+                      <Palette className="mr-2 h-5 w-5" />
+                      Upload Design - ₹{prices[selectedQuantity as keyof typeof prices]}
                     </Button>
-                  ))}
+                    <Button
+                      onClick={handleAddToCart}
+                      variant="outline"
+                      className="w-full"
+                      size="lg"
+                    >
+                      Add to Cart
+                    </Button>
+                  </div>
                 </div>
-              </div>
-
-              <div className="pt-4 border-t">
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-3xl font-bold text-foreground">
-                    ₹{prices[selectedQuantity as keyof typeof prices]}
-                  </span>
-                  <span className="text-muted-foreground">for {selectedQuantity} cards</span>
-                </div>
-
-                <div className="space-y-3">
-                  <Button onClick={handleCustomize} className="w-full" size="lg">
-                    <Palette className="mr-2 h-5 w-5" />
-                    Customize Your Design
-                  </Button>
-                  <Button
-                    onClick={handleAddToCart}
-                    variant="outline"
-                    className="w-full"
-                    size="lg"
-                  >
-                    Add to Cart
-                  </Button>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </div>
 
             <div className="space-y-3">
               <h3 className="font-bold text-foreground text-lg">Features & Benefits</h3>
